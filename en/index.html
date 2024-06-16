@@ -54,6 +54,10 @@
     <h1>YES</h1>
 </div>
 
+<div id="timerWrapper" class="content hide">
+    <p id="timer">...</p>
+</div>
+
 <div class="content">
     <p>
         This page contains the latest news regarding the upcoming family increase in <a href="https://ll.opplegget.no">LL Stange</a>
@@ -64,5 +68,37 @@
     <a href="/">Norsk?</a>
 </div>
 
+<script type="application/javascript">
+    document.addEventListener("DOMContentLoaded", () => {
+        const timerWrapper = document.querySelector("#timerWrapper");
+        const timerText = document.querySelector("#timer");
+
+        setInterval(() => {
+            const scratch = new Date("2024-06-15T20:37:00Z").getTime();
+            const now = new Date().getTime();
+
+            // get total seconds between the times
+            var delta = Math.abs(scratch - now) / 1000;
+
+            // calculate (and subtract) whole days
+            var days = Math.floor(delta / 86400);
+            delta -= days * 86400;
+
+            // calculate (and subtract) whole hours
+            var hours = Math.floor(delta / 3600) % 24;
+            delta -= hours * 3600;
+
+            // calculate (and subtract) whole minutes
+            var minutes = Math.floor(delta / 60) % 60;
+            delta -= minutes * 60;
+
+            // what's left is seconds
+            var seconds = Math.floor(delta % 60);  // in theory the modulus is not required
+
+            timerText.innerText = `Kiddo has been here ${days} days, ${hours} hours, ${minutes} minutes og ${seconds} seconds`;
+            timerWrapper.classList.remove("hide");
+        }, 1000);
+    });
+</script>
 </body>
 </html>
